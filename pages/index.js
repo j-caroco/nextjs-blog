@@ -1,45 +1,32 @@
-
-
-import axios from 'axios'
-import MUIDataTable from "mui-datatables"
-import { getData } from '../lib/data';
+import axios from "axios";
+import MUIDataTable from "mui-datatables";
+import { getData } from "../lib/data";
+import Link from "next/link";
 
 const columns = ["id", "created_at", "entity", "amount", "type", "source"];
- 
-const data = [
- ["Joe James", "Test Corp", "Yonkers", "NY"],
- ["John Walsh", "Test Corp", "Hartford", "CT"],
- ["Bob Herm", "Test Corp", "Tampa", "FL"],
- ["James Houston", "Test Corp", "Dallas", "TX"],
-];
-const options = {
-  filterType: 'checkbox',
-};
-
 
 export default function Home({ names }) {
-  return (
-    <MUIDataTable 
-      title={"Random data"} 
-      data={names} 
-      columns={columns} 
-      options={options} 
-    />
-  )
+	return (
+		<>
+			<h2>
+				<Link href="/posts/first-post">
+					<a>Go to server side pagination</a>
+				</Link>
+			</h2>
+			<MUIDataTable title={"Random data"} data={names} columns={columns} />
+		</>
+	);
 }
 
 export async function getStaticProps() {
-  const names = [];
-  const data = await getData();
+	const names = [];
+	const data = await getData();
 
-  data.forEach(element => names.push(Object.values(element)) );
+	data.forEach((element) => names.push(Object.values(element)));
 
-  console.log(names);
-  return {props: {
-    names
-  }}
-
+	return {
+		props: {
+			names,
+		},
+	};
 }
-
-
-
